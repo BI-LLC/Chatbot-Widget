@@ -100,7 +100,7 @@ export class OpenAIService {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94dnpyY2hjZnptYW9mdHJvbmttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkzNTA5OTAsImV4cCI6MjA2NDkyNjk5MH0.Yn4tOEWm4H5ZLNsEGAp_Q3JyP0RaaMoHnfRRX0R5vOs`,
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6Z2NuYWVwc2pxeW9nZ3ljbmNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk2NDMyODMsImV4cCI6MjA2NTIxOTI4M30.J2VNMDJxPireFWy6pn9-A6e4m6CSOx1PhxZcbgEKv-M`,
           ...(token && { 'Authorization': `Bearer ${token}` }),
         },
         body: JSON.stringify({
