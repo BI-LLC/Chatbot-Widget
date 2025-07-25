@@ -96,7 +96,7 @@ export class OpenAIService {
       const { data: { session } } = await supabase.auth.getSession();
       const token = session?.access_token;
 
-      const response = await fetch(`https://oxvzrchcfzmaoftronkm.supabase.co/functions/v1/chat-completion`, {
+      const response = await fetch(`https://tzgcnaepsjqyoggycncc.supabase.co/functions/v1/chat-completion`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
