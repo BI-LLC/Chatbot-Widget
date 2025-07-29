@@ -4,14 +4,13 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': 'https://chatbot-widget-alpha.vercel.app', 
+  'Access-Control-Allow-Origin': 'https://chatbot-widget-alpha.vercel.app', // ✅ Your real domain
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
-// Serve the function
 serve(async (req: Request) => {
-  // 1. Handle CORS preflight request
+  // 🔁 Handle preflight
   if (req.method === 'OPTIONS') {
     return new Response('', {
       headers: corsHeaders,
@@ -19,12 +18,8 @@ serve(async (req: Request) => {
   }
 
   try {
-    // 2. Parse request body
     const { messages, model = 'gpt-4.1-2025-04-14', temperature = 0.7, maxTokens = 1000 } = await req.json();
 
-    console.log('Calling OpenAI with model:', model);
-
-    // 3. Call OpenAI API
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -43,7 +38,6 @@ serve(async (req: Request) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('OpenAI error:', response.status, errorText);
       return new Response(JSON.stringify({ error: errorText }), {
         status: response.status,
         headers: {
@@ -53,11 +47,11 @@ serve(async (req: Request) => {
       });
     }
 
-    // 4. Return the streamed response (important: keep CORS headers!)
+    // ✅ Return streamed response with CORS headers
     return new Response(response.body, {
       headers: {
         ...corsHeaders,
-        'Content-Type': 'text/event-stream', // changed to better reflect streaming
+        'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
         'Connection': 'keep-alive',
         'Transfer-Encoding': 'chunked',
@@ -65,7 +59,6 @@ serve(async (req: Request) => {
     });
 
   } catch (err) {
-    console.error('Function error:', err);
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
       headers: {
